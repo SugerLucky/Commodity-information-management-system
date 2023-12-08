@@ -1,21 +1,30 @@
 #pragma once
 #include <string>
+#include <iostream>
 using namespace std;
 /*
 * 用户的基类
 */
 class User {
 private:
+    int id;
     string username;
     string password;
-    string role;
 
 public:
     User() = default;
 
-    User(const string& username, const string& password, const string& role)
-        : username(username), password(password), role(role)
+    User(int id, const string& username, const string& password)
+        : id(id), username(username), password(password)
     {
+    }
+
+    int getId() const {
+        return id;
+    }
+
+    void set(int id) {
+        this->id = id;
     }
 
     string getUsername() const {
@@ -34,6 +43,6 @@ public:
         password = psw;
     }
 
-
+    
 };
 

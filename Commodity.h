@@ -7,18 +7,58 @@ using namespace std;
 class Commodity {
 private:
     int id;
-    string type;
+    int type; //1.食品 2.衣服 3.数码 4.书籍
     double price;
     int quantity;
-    int supplier_id;
+    int supplierId;
 
 public:
 
     Commodity() = default;
 
-    Commodity(int id, const string& type, double price, int quantity, int supplier_id)
-        : id(id), type(type), price(price), quantity(quantity), supplier_id(supplier_id)
+    Commodity(int id, int type, double price, int quantity, int supplier_id)
+        : id(id), type(type), price(price), quantity(quantity), supplierId(supplierId)
     {
+    }
+
+    int getId() const {
+        return id;
+    }
+
+    void setId(int i) {
+        id = i;
+    }
+
+    int getType() const {
+        return type;
+    }
+
+    void setType(int t) {
+        type = t;
+    }
+
+    double getPrice() const {
+        return price;
+    }
+
+    void setPrice(double p) {
+        price = p;
+    }
+
+    int getQuantity() const {
+        return quantity;
+    }
+
+    void setQuantity(int q) {
+        quantity = q;
+    }
+
+    int getSupplierId() const {
+        return supplierId;
+    }
+
+    void setSupplierId(int si) {
+        supplierId = si;
     }
 
 

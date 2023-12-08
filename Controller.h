@@ -8,6 +8,7 @@ class Controller {
 private:
 	Service* service;
 
+	//每一个对外暴露的方法都称之为功能接口
 public:
 	User* list() {
 
