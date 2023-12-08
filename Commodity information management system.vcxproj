@@ -130,6 +130,7 @@
     <ClInclude Include="Administrator.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Commodity.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Dao.h" />
     <ClInclude Include="ManagementSystemApp.h" />
     <ClInclude Include="Service.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="Administrator.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Commodity.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Dao.cpp" />
     <ClCompile Include="ManagementSystemApp.cpp" />
     <ClCompile Include="Service.cpp" />

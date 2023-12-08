@@ -5,5 +5,14 @@
 class Service {
 private:
 
+
+public:
+	bool check() {
+
+	}
+
+
+
+	
 };
 

@@ -17,5 +17,23 @@ public:
         : username(username), password(password), role(role)
     {
     }
+
+    string getUsername() const {
+        return username;
+    }
+
+    void setUsername(string name) {
+        username = name;
+    }
+
+    string getPassword() const {
+        return password;
+    }
+
+    void setPassword(string psw) {
+        password = psw;
+    }
+
+
 };
 
