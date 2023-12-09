@@ -1,5 +1,7 @@
 #pragma once
 #include "User.h"
+#include "Client.h"
+#include "Administrator.h"
 /*
 * 客户和管理员业务逻辑处理的基类
 */
@@ -11,10 +13,18 @@ public:
 	//校验用户登录
 	bool checkUser(string username, string pwd, int role) {
 		bool b = false;
-		user->setUsername(username);
-		user->setPassword(pwd);
-
 		/*下面要去访问数据库，查询是否有该用户*/
+		if (role == 1) {
+			//去client表查询
+		}
+		else {
+			//去administrator
+		}
+
+		//user->setUsername(username);
+		//user->setPassword(pwd);
+
+		
 
 
 
@@ -27,7 +37,7 @@ public:
 	}
 
 	//注册用户
-	void enroll(int i) {
+	void enroll() {
 		//将该用户信息存入数据库
 
 
@@ -38,10 +48,12 @@ public:
 	}
 
 	//浏览商品
-	void browseProducts();
+	void browseProducts() {}
 
 	//查询商品
-	void findProducts();
+	void findProducts() {}
+
+	//
 
 
 

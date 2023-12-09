@@ -7,7 +7,7 @@ using namespace std;
 class Commodity {
 private:
     int id;
-    int type; //1.食品 2.衣服 3.数码 4.书籍
+    int type; //1.食品 2.衣服 3.数码 4.书籍，数据处理层再和具体的说明对应
     double price;
     int quantity;
     int supplierId;
@@ -16,7 +16,7 @@ public:
 
     Commodity() = default;
 
-    Commodity(int id, int type, double price, int quantity, int supplier_id)
+    Commodity(int id, int type, double price, int quantity, int supplierId)
         : id(id), type(type), price(price), quantity(quantity), supplierId(supplierId)
     {
     }

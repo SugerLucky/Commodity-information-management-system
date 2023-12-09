@@ -12,7 +12,11 @@ public:
 
 	}
 
-	void browseClientOrders(int id) {
+	void browseClientOrders() {
+
+	}
+
+	void searchClientOrders(int id) {
 
 	}
 };
