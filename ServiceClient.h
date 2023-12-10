@@ -21,10 +21,10 @@ public:
 
 	//购买商品---将商品全部添加到订单中
 	//@ pram: num为购买的数量
-	void purchase(Commodity goods, int num) {
-			Order o(idCount++, client.getId(), goods.getId(), num);
-			order.push_back(o);
-			orderNum++;
+	void purchase(int id, int num) {
+			//Order o(idCount++, client.getId(), goods.getId(), num);
+			//order.push_back(o);
+			//orderNum++;
 
 
 			//还要将该订单加入到订单表中

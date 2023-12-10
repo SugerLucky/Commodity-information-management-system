@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 using namespace std;
 #include "Service.h"
 #include "ServiceAdmin.h"
@@ -55,6 +56,7 @@ public:
                                 cout << "欢迎进入客户操作界面" << endl;
                                 cout << "1. 浏览商品" << endl;
                                 cout << "2. 查询商品" << endl;
+                                cout << "3. 添加商品" << endl;
                                 cout << "3. 浏览用户订单" << endl;
                                 cout << "4. 查询用户订单" << endl;
                                 cout << "5. 退出系统" << endl;
@@ -63,22 +65,25 @@ public:
 
                                 switch (key) {
                                 case '1':
-                                    serviceAdmin->browseProducts();
+                                    serviceAdmin->browseGoods();
                                     break;
                                 case '2':
-                                    serviceAdmin->findProducts();
-                                    break;
-                                case '3':
-                                    cout << "请输入你要查询用户的id: " << endl;
-                                    cin >> key;
-                                    serviceAdmin->browseClientOrders();
+                                    serviceAdmin->findGoods();
                                     break;
                                 case '4':
                                     cout << "请输入你要查询用户的id: " << endl;
                                     cin >> key;
-                                    serviceAdmin->searchClientOrders(key);
+                                    serviceAdmin->browseClientOrders();
+                                    break;
+                                case '3':
+                                    serviceAdmin->addGoods();
                                     break;
                                 case '5':
+                                    cout << "请输入你要查询用户的id: " << endl;
+                                    cin >> key;
+                                    serviceAdmin->searchClientOrders(key);
+                                    break;
+                                case '6':
                                     loop = false;
                                     break;
                                 default:
@@ -115,16 +120,24 @@ public:
                                 cin >> key;
                                 switch (key) {
                                 case '1':
-
+                                    serviceClient->browseGoods();
                                     break;
                                 case '2':
-
+                                    cout << "请输入你要查询商品的id" << endl;
+                                    int id;
+                                    cin >> id;
+                                    serviceClient->searchGoods(id);
                                     break;
                                 case '3':
-
+                                    cout << "请输入你要购买商品的id" << endl;
+                                    cin >> id;
+                                    int num;
+                                    cout << "请输入购买的数量" << endl;
+                                    cin >> num;
+                                    serviceClient->purchase(id, num);
                                     break;
                                 case '4':
-
+                                    serviceClient->browseOrder();
                                     break;
                                 case '5':
                                     loop = false;

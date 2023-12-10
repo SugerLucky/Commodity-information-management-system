@@ -48,10 +48,10 @@ public:
 	}
 
 	//浏览商品
-	void browseProducts() {}
+	void browseGoods() {}
 
 	//查询商品
-	void findProducts() {}
+	void searchGoods(int id) {}
 
 	//
 
