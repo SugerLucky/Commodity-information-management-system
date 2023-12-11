@@ -38,8 +38,25 @@ public:
     bool check(const string& username, const string& password, int role) {
         try {
             sql::PreparedStatement* prep_stmt;
-            sql::ResultSet* res;
+            /*
+            PreparedStatement 是数据库编程中的一个重要概念，它提供了一种预编译 SQL 语句的机制，可以有效地执行参数化查询，提高了执行相似 SQL 语句的效率和安全性。
 
+            在 C++ 中，对于一些数据库连接库，比如 MySQL C++ Connector，PreparedStatement 是用来执行带有参数的 SQL 查询语句的类。通过预编译 SQL 语句并绑定参数，可以减少 SQL 注入的风险，并且提高了多次执行相同查询的效率。
+
+            在预编译之后，可以通过设置参数值来执行 SQL 查询，并且 PreparedStatement 会在执行时将参数值填入预编译的 SQL 语句中，从而执行具体的查询操作。这种机制不仅可以提高性能，还可以避免手动拼接 SQL 语句所带来的安全风险。
+
+            总之，PreparedStatement 是一种用于执行带有参数的预编译 SQL 查询语句的机制，它在数据库编程中起到了重要的作用。
+            */
+            sql::ResultSet* res;
+            /*
+            ResultSet 是数据库编程中用来表示执行查询后返回的结果集的一个重要概念。在 C++ 的一些数据库连接库中，比如 MySQL C++ Connector，ResultSet 是一个类，用来表示数据库查询的结果集。
+
+            一旦执行了查询操作，通常会得到一个 ResultSet 对象，这个对象包含了查询返回的数据行。通过 ResultSet 对象，可以逐行获取查询结果，并且处理这些数据，比如提取结果中的字段值、执行聚合操作、或者将结果用于生成报表等。
+
+            ResultSet 对象提供了一系列的方法，用来操作和处理查询结果。通过这些方法，可以遍历结果集、获取特定列的值、进行数据操作等。在处理完结果集后，通常需要手动释放 ResultSet 对象以释放相关资源。
+    
+            总之，ResultSet 是一个用来表示数据库查询结果集的类，它在数据库编程中扮演了重要的角色，用于获取查询的结果并进行相应的操作。
+            */
             if (role == 1) {
                 prep_stmt = con->prepareStatement("SELECT username, password FROM administrator where username = ? and password = ?");
                 prep_stmt->setString(1, username);
