@@ -12,8 +12,15 @@ class SystemView {
 private:
 	bool loop = true; //控制菜单显示
 	char key = ' '; //接收用户选择
+    int keyId = 0; //接收用户选择
 	ServiceAdmin* serviceAdmin; //提供用户各种操作的接口
 	ServiceClient* serviceClient; //提供用户各种操作的接口
+
+public:
+    ~SystemView() {
+        delete serviceAdmin;
+        delete serviceClient;
+    }
 
     //动态分配对象，但是特有方法又掉不了，除非是接口编程的形式
 
@@ -35,7 +42,7 @@ public:
                 while (loop) {
                     //二级菜单
                     system("cls");
-                    cout << "请选择你登录的账号类型：1. 管理员 2. 客户" << endl;
+                    cout << "请选择你登录的账号类型：1. 管理员 2. 客户 (输入0可返回主菜单)" << endl;
                     cin >> key;
 
                     if (key == '1') {
@@ -57,9 +64,9 @@ public:
                                 cout << "1. 浏览商品" << endl;
                                 cout << "2. 查询商品" << endl;
                                 cout << "3. 添加商品" << endl;
-                                cout << "3. 浏览用户订单" << endl;
-                                cout << "4. 查询用户订单" << endl;
-                                cout << "5. 退出系统" << endl;
+                                cout << "4. 浏览用户订单" << endl;
+                                cout << "5. 查询用户订单" << endl;
+                                cout << "6. 退出系统" << endl;
                                 cout << "请输入你的选择: " << endl;
                                 cin >> key;
 
@@ -68,15 +75,17 @@ public:
                                     serviceAdmin->browseGoods();
                                     break;
                                 case '2':
-                                    serviceAdmin->findGoods();
-                                    break;
-                                case '4':
-                                    cout << "请输入你要查询用户的id: " << endl;
-                                    cin >> key;
-                                    serviceAdmin->browseClientOrders();
+                                    cout << "请输入查询商品的id" << endl;
+                                    cin >> keyId;
+                                    serviceAdmin->searchGoods(keyId);
                                     break;
                                 case '3':
+                                    cout << "请输入你要添加商品的相关信息：" << endl;
+                                    //等下实现
                                     serviceAdmin->addGoods();
+                                    break;
+                                case '4':
+                                    serviceAdmin->browseClientOrders();
                                     break;
                                 case '5':
                                     cout << "请输入你要查询用户的id: " << endl;
@@ -152,29 +161,40 @@ public:
                         }
                         else {
                             cout << "登录失败，请重新登录！" << endl;
+                            system("pause");
+                            system("cls");
                         }
+                    }
+                    else if (key == '0') {
+                        system("cls");
+                        break; // 返回主菜单
+
                     }
                     else {
                         cout << "你的输入有误，请重新输入！" << endl;
-                        system("pasue");
+                        system("pause");
                         system("cls");
                     }
-                    break;
                 }
+                break;
             case '2':
                 cout << "请选择注册的账号类型：1. 管理员 2. 客户" << endl;
                 cin >> key;
-                cout << "请输入用户名：" << endl;
-                cin >> username;
-                cout << "请输入密码：" << endl;
-                cin >> password;
                 if (key == '1') {
+                    cout << "请输入用户名：" << endl;
+                    cin >> username;
+                    cout << "请输入密码：" << endl;
+                    cin >> password;
                     serviceAdmin->enroll();
                     cout << "注册成功，即将返回首页" << endl;
                     system("pause");
                     system("cls");
                 }
                 else if (key == '2') {
+                    cout << "请输入用户名：" << endl;
+                    cin >> username;
+                    cout << "请输入密码：" << endl;
+                    cin >> password;
                     serviceClient->enroll();
                     cout << "注册成功，即将返回首页" << endl;
                     system("pause");
@@ -182,6 +202,8 @@ public:
                 }
                 else {
                     cout << "你的输入有误, 注册失败！" << endl;
+                    system("pause");
+                    system("cls");
                 }
                 break;
             case '3':
@@ -189,7 +211,7 @@ public:
                 break;
             default:
                 cout << "你的输入有误，请重新输入！" << endl;
-                system("pasue");
+                system("pause");
                 system("cls");
                 break;
             }

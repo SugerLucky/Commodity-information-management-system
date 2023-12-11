@@ -7,7 +7,9 @@
 */
 class ServiceAdmin : public Service {
 public:
-	void addGoods() {}
+	void addGoods() {
+
+	}
 
 	void modifyGoods(int id) {
 
