@@ -1,10 +1,15 @@
 #pragma once
-#include <jdbc/cppconn/resultset.h>
-#include <jdbc/cppconn/statement.h>
-#include <jdbc/mysql_connection.h>
-#include <jdbc/mysql_driver.h>
-#include <jdbc/cppconn/exception.h>
-#include <jdbc/cppconn/prepared_statement.h>
+#include <mysql/jdbc.h>
+#include <mysqlx/xdevapi.h>
+using namespace std;
+//using namespace mysqlx;
+
+//#include <jdbc/cppconn/resultset.h>
+//#include <jdbc/cppconn/statement.h>
+//#include <jdbc/mysql_connection.h>
+//#include <jdbc/mysql_driver.h>
+//#include <jdbc/cppconn/exception.h>
+//#include <jdbc/cppconn/prepared_statement.h>
 
 #include "User.h"
 #include "Client.h"
@@ -24,16 +29,66 @@ private:
     sql::Connection* con; 
 
 
+
+
+
 public:
     Dao() {
         driver = get_driver_instance(); //获取MySQL驱动程序的实例
-        con = driver->connect("localhost", "root", "123456"); //返回一个表示与数据库的连接的对象，该对象包含了与数据库的通信所需的信息
+        //con = driver->connect("localhost", "root", "123456"); //返回一个表示与数据库的连接的对象，该对象包含了与数据库的通信所需的信息
+        
+
+        try {
+            //sql::ConnectOptionsMap connection_properties;
+            //connection_properties["OPT_MULTI_HOST"] = "true";
+            //con = driver->connect(connection_properties);
+            
+            // 进行数据库连接的代码
+            con = driver->connect("tcp://127.0.0.1:3306", "root", "123456");
+
+            // 其他数据库操作
+        }
+        catch (sql::SQLException& e) {
+            std::cout << "MySQL Error: " << e.what() << std::endl;
+            // 其他错误处理
+        }
+
         con->setSchema("goods_system");
     }
 
     ~Dao() {
         delete con; //释放连接资源
     }
+
+
+    void connect() {
+        try {
+        // 准备参数
+        int paramValue = 123;
+
+        // 建立连接
+        mysqlx::Session sess("host", 33060, "user", "password", "schema");
+
+        // 执行参数化查询
+        mysqlx::SqlStatement stmt = sess.sql("SELECT * FROM your_table WHERE id = :paramValue");
+        stmt.bind("paramValue", paramValue);
+        mysqlx::SqlResult res = stmt.execute();
+
+        // 解析数据
+        while (mysqlx::Row row = res.fetchOne()) {
+            // 处理查询结果
+        }
+        
+        // 关闭连接
+        sess.close();
+    } catch (const mysqlx::Error &err) {
+        std::cerr << "Error: " << err << std::endl;
+    }
+    }
+
+
+
+    /*公共获取数据函数*/
 
     bool check(const string& username, const string& password, int role) {
         try {
@@ -91,84 +146,104 @@ public:
         }
     }
 
+    void _register(string username, string password, int role) {
+        
+    }
 
-    //bool check(const string& username,const string& password, int role) {
-    //    //sql::Driver* driver;
-    //    //sql::Connection* con;
-    //    //driver = get_driver_instance();
-    //    //con = driver->connect("localhost", "root", "123456");
-    //    //con->setSchema("goods_system");
-    //    sql::PreparedStatement* prep_stmt;
-    //    sql::ResultSet* res;
-
-    //    if (role == 1) {
-    //        prep_stmt = con->prepareStatement("SELECT username, password FROM administrator where username = ? and password = ?");
-    //    }
-    //    else {
-    //        prep_stmt = con->prepareStatement("SELECT username, password FROM client where username = ? and password = ?");
-    //    }
-
-    //    // 设置参数值
-    //    prep_stmt->setString(1, username);
-    //    prep_stmt->setString(2, password);
+    vector<Commodity> browseGoods() {
+        vector<Commodity> res;
 
 
 
-    //    //sql::Statement* stmt;
-    //    //sql::ResultSet* res;
-    //    /*prep_stmt = con->createStatement();*/
-    //    //if (role == 1) {
-    //    //    res = stmt->executeQuery("SELECT username, password FROM administrator where username = ?");
-    //    //}
-    //    //else {
-    //    //    res = stmt->executeQuery("SELECT username, password FROM client where username = ?");
-    //    //}
 
-    //    while (res->next()) {
-    //        /*int id = res->getInt("id");
-    //        std::string name = res->getString("name");
-    //        int age = res->getInt("age");*/
-    //        // 创建对象并将数据封装进去
-    //         //User obj(id, name, age);
-    //        // 将对象存储到合适的数据结构中，比如vector或map
-    //    }
+        return res;
+    }
 
-    //    // 释放资源
-    //    delete res;
-    //    delete stmt;
-    //    delete con;
-    //}
+    Commodity searchGoods(int id) {
+        Commodity goods;
 
 
-	void connect() {
-        // 连接到MySQL数据库
-        sql::Driver* driver;
-        sql::Connection* con;
-        driver = get_driver_instance();
-        con = driver->connect("localhost", "username", "password");
-        con->setSchema("your_database");
 
-        // 执行SQL查询
-        sql::Statement* stmt;
-        sql::ResultSet* res;
-        stmt = con->createStatement();
-        res = stmt->executeQuery("SELECT id, name, age FROM your_table");
 
-        // 封装数据到对象
-        while (res->next()) {
-            int id = res->getInt("id");
-            std::string name = res->getString("name");
-            int age = res->getInt("age");
-            // 创建对象并将数据封装进去
-             //User obj(id, name, age);
-            // 将对象存储到合适的数据结构中，比如vector或map
+        return goods;
+    }
+
+    /*Client特有的数据获取函数*/
+
+    vector<Order> browseOrder() {
+        vector<Order> result;
+        try {
+            //sql::Driver* driver;
+            //sql::Connection* con;
+            sql::Statement* stmt;
+            sql::ResultSet* res;
+
+            //driver = get_driver_instance();
+            //con = driver->connect("tcp://127.0.0.1:3306", "username", "password");
+            //con->setSchema("your_database");
+
+            stmt = con->createStatement();
+            res = stmt->executeQuery("SELECT id, create_time FROM items");
+
+            while (res->next()) {
+                Order order;
+                //order.setCreateTime(res->getDateTime("create_time"));
+                // Use the item object with the retrieved create time
+            }
+
+            delete res;
+            delete stmt;
+            delete con;
+        }
+        catch (sql::SQLException& e) {
+            // Handle SQL exception
         }
 
-        // 释放资源
-        delete res;
-        delete stmt;
-        delete con;
-	}
+        return result;
+    }
+
+    void purchase(int id, int num) {
+
+    }
+
+    /*Administrator特有的数据获取函数*/
+
+
+
+
+
+
+
+
+	//void connect() {
+ //       // 连接到MySQL数据库
+ //       sql::Driver* driver;
+ //       sql::Connection* con;
+ //       driver = get_driver_instance();
+ //       con = driver->connect("localhost", "username", "password");
+ //       con->setSchema("your_database");
+
+ //       // 执行SQL查询
+ //       sql::Statement* stmt;
+ //       sql::ResultSet* res;
+ //       stmt = con->createStatement();
+ //       res = stmt->executeQuery("SELECT id, name, age FROM your_table");
+
+ //       // 封装数据到对象
+ //       while (res->next()) {
+ //           int id = res->getInt("id");
+ //           std::string name = res->getString("name");
+ //           int age = res->getInt("age");
+ //           // 创建对象并将数据封装进去
+ //            //User obj(id, name, age);
+ //           // 将对象存储到合适的数据结构中，比如vector或map
+ //       }
+
+ //       // 释放资源
+ //       delete res;
+ //       delete stmt;
+ //       delete con;
+	//}
 
 };
 

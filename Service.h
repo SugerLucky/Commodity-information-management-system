@@ -28,24 +28,22 @@ public:
 	}
 
 	//注册用户
-	void enroll() {
+	void enroll(string username, string password, int role) {
 		//将该用户信息存入数据库
-
-
-
-
-
+		dao._register(username, password, role);
 		cout << "注册成功" << endl;
 	}
 
 	//浏览商品
 	void browseGoods() {
-
+		vector<Commodity> res = dao.browseGoods();
 	}
 
 	//查询商品
 	void searchGoods(int id) {
-	
+		Commodity goods = dao.searchGoods(id);
+
+		goods.toString();
 	}
 
 	//

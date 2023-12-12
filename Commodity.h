@@ -21,46 +21,52 @@ public:
     {
     }
 
-    int getId() const {
-        return id;
-    }
+    int getId() const { return id; }
 
-    void setId(int i) {
-        id = i;
-    }
+    void setId(int newId) { id = newId; }
 
-    int getType() const {
-        return type;
-    }
+    int getType() const { return type; }
 
-    void setType(int t) {
-        type = t;
-    }
+    void setType(int newType) { type = newType; }
 
-    double getPrice() const {
-        return price;
-    }
+    double getPrice() const { return price; }
 
-    void setPrice(double p) {
-        price = p;
-    }
+    void setPrice(double newPrice) { price = newPrice; }
 
-    int getQuantity() const {
-        return quantity;
-    }
+    int getQuantity() const { return quantity; }
 
-    void setQuantity(int q) {
-        quantity = q;
-    }
+    void setQuantity(int newQuantity) { quantity = newQuantity; }
 
-    int getSupplierId() const {
-        return supplierId;
-    }
+    int getSupplierId() const { return supplierId; }
 
-    void setSupplierId(int si) {
-        supplierId = si;
-    }
+    void setSupplierId(int newSupplierId) { supplierId = newSupplierId; }
 
+    string toString() {
+        string typeStr;
+        switch (type) {
+        case 1:
+            typeStr = "食品";
+            break;
+        case 2:
+            typeStr = "衣服";
+            break;
+        case 3:
+            typeStr = "数码";
+            break;
+        case 4:
+            typeStr = "书籍";
+            break;
+        default:
+            typeStr = "未知类型";
+            break;
+        }
+
+        return "ID: " + to_string(id) + "\n" +
+            "Type: " + typeStr + "\n" +
+            "Price: " + to_string(price) + "\n" +
+            "Quantity: " + to_string(quantity) + "\n" +
+            "Supplier ID: " + to_string(supplierId);
+    }
 
 };
 

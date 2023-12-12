@@ -7,7 +7,8 @@
 */
 class ServiceClient : public Service {
 private:
-	Client client;
+	Dao dao;
+	//Client client;
 	//vector<Commodity> shoppingCart;
 	vector<Order> order;
 	int orderNum = 1; //当前的总订单数
@@ -26,7 +27,7 @@ public:
 			//order.push_back(o);
 			//orderNum++;
 
-
+		dao.purchase(id, num);
 			//还要将该订单加入到订单表中
 
 	}
@@ -34,6 +35,7 @@ public:
 	//浏览订单
 	void browseOrder() {
 		//查询数据库订单表将所有订单展示出来
+		dao.browseOrder();
 
 	}
 };

@@ -185,7 +185,7 @@ public:
                     cin >> username;
                     cout << "请输入密码：" << endl;
                     cin >> password;
-                    serviceAdmin->enroll();
+                    serviceAdmin->enroll(username, password, 1);
                     cout << "注册成功，即将返回首页" << endl;
                     system("pause");
                     system("cls");
@@ -195,7 +195,7 @@ public:
                     cin >> username;
                     cout << "请输入密码：" << endl;
                     cin >> password;
-                    serviceClient->enroll();
+                    serviceClient->enroll(username, password, 2);
                     cout << "注册成功，即将返回首页" << endl;
                     system("pause");
                     system("cls");
