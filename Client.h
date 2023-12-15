@@ -12,5 +12,11 @@ private:
 
 public:
 
+	Client() = default;
+
+	Client(const string& user, const string& pwd) : User(user, pwd) {}
+
+	static string getFileName() { return "clients.txt"; }
+
 };
 

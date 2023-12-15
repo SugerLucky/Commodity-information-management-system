@@ -7,7 +7,6 @@ using namespace std;
 */
 class User {
 private:
-    int id;
     string username;
     string password;
 
@@ -15,22 +14,17 @@ private:
 public:
     User() = default;
 
-    User(int id, const string& username, const string& password)
-        : id(id), username(username), password(password)
+    User(const string& username, const string& password)
+        : username(username), password(password)
     {
     }
 
-    int getId() const {
-        return id;
-    }
-
-    void set(int id) {
-        this->id = id;
-    }
+    virtual ~User() {}
 
     string getUsername() const {
         return username;
     }
+
 
     void setUsername(string name) {
         username = name;
@@ -44,6 +38,15 @@ public:
         password = psw;
     }
 
-    
+    bool operator==(const User& other) const
+    {
+        return username == other.username && password == other.password;
+    }
+
+    string toString() const {
+        return "username: " + username + ", password: " + password;
+    }
+
+    static string getFileName() { return "users.txt"; }
 };
 

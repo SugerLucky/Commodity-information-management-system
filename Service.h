@@ -2,56 +2,91 @@
 #include "User.h"
 #include "Client.h"
 #include "Administrator.h"
-#include "Dao.h"
+#include "FileStorage.h"
+
 /*
 * 客户和管理员业务逻辑处理的基类
 */
 class Service {
 private:
-	Dao dao; //连接数据库
 
 public:
 	//校验用户登录
-	bool checkUser(const string& username, const string& password, int role) {
-		bool b = false;
-		/*下面要去访问数据库，查询是否有该用户*/
+	bool checkUser(string username, string password, int role) {
+		vector<string> users;
+		string filename = (role == 1) ? "administrators.txt" : "clients.txt";
 		if (role == 1) {
-			//去client表查询
-			b = dao.check(username, password, role);
-
+			users = FileStorage::loadAll<Administrator>();
 		}
 		else {
-			//去administrator表查询
-			b = dao.check(username, password, role);
+			users = FileStorage::loadAll<Client>();
 		}
-		return b;
+
+		User user(username, password);
+		string res = user.toString(); //即将登录用户的信息
+		for (const auto& userInfo : users) {
+			// 进行用户信息匹配的逻辑
+			if (res == userInfo) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	//注册用户
 	void enroll(string username, string password, int role) {
-		//将该用户信息存入数据库
-		dao._register(username, password, role);
+		string filename = (role == 1) ? "clients.txt" : "administrators.txt";
+
+		if (role == 1) {
+			//将该用户信息存入client.txt文件中
+			Administrator admin(username, password);
+			FileStorage::save(admin);
+		}
+		else {
+			//将该用户信息存入administrator.txt文件中
+			Client client(username, password);
+			FileStorage::save(client);
+		}
 		cout << "注册成功" << endl;
+		system("pause");
+		system("cls");
 	}
 
 	//浏览商品
 	void browseGoods() {
-		vector<Commodity> res = dao.browseGoods();
+		vector<string> goodsInfo = FileStorage::loadAll<Commodity>();
+		for (const auto& info : goodsInfo) {
+			// 展示商品信息
+			cout << info << endl;
+		}
+
+		system("pause");
+		system("cls");
 	}
 
 	//查询商品
 	void searchGoods(int id) {
-		Commodity goods = dao.searchGoods(id);
+		vector<string> goodsInfo = FileStorage::loadAll<Commodity>();
+		bool found = false;
+		for (const auto& info : goodsInfo) {
+			Commodity currentCommodity;
+			// 从字符串中创建Commodity对象
+			currentCommodity = Commodity::fromString(info);
 
-		goods.toString();
+			// 检查商品id是否匹配
+			if (currentCommodity.getId() == id) {
+				// 找到了指定id的商品信息
+				// 展示这个商品信息
+				cout << "Found commodity: " << info << endl;
+				found = true;
+				break; // 如果找到了指定id的商品信息，直接跳出循环
+			}
+		}
+		if (!found) {
+			cout << "Commodity with ID " << id << " not found." << endl;
+		}
+		system("pause");
+		system("cls");
 	}
-
-	//
-
-
-
-
-
-	
 };
 

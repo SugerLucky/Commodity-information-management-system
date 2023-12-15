@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\MySQL\MySQL Connector C++ 8.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\MySQL\MySQL Connector C++ 8.2\lib64\vs14;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,13 +108,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Connector C++ 8.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\MySQL\MySQL Connector C++ 8.2\lib64\vs14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcrypto.lib;libssl.lib;mysqlcppconn.lib;mysqlcppconn8.lib;mysqlcppconn8-static.lib;mysqlcppconn-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -140,7 +140,7 @@
     <ClInclude Include="Administrator.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Commodity.h" />
-    <ClInclude Include="Dao.h" />
+    <ClInclude Include="FileStorage.h" />
     <ClInclude Include="ManagementSystemApp.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="Service.h" />
@@ -149,13 +149,12 @@
     <ClInclude Include="Supplier.h" />
     <ClInclude Include="SystemView.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Administrator.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Commodity.cpp" />
-    <ClCompile Include="Dao.cpp" />
+    <ClCompile Include="FileStorage.cpp" />
     <ClCompile Include="ManagementSystemApp.cpp" />
     <ClCompile Include="Order.cpp" />
     <ClCompile Include="Service.cpp" />
@@ -164,7 +163,6 @@
     <ClCompile Include="Supplier.cpp" />
     <ClCompile Include="SystemView.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

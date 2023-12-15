@@ -26,6 +26,9 @@ public:
 
 public:
 	void mainMenu() {
+        Order::loadMaxId(); //加载订单的下一个编号
+        Commodity::loadMaxId(); //加载商品的下一个编号
+
         while (loop) {
             string username;
             string password;
@@ -53,14 +56,14 @@ public:
                         cin >> username;
                         cout << "请输入密码：" << endl;
                         cin >> password;
-
+                        
                         if (serviceAdmin->checkUser(username, password, 1)) { //这里进行登录校验
                             //成功后进入三级客户菜单
                             cout << "登录成功" << endl;
                             system("pause");
                             system("cls");
                             while (loop) {
-                                cout << "欢迎进入客户操作界面" << endl;
+                                cout << "欢迎进入管理员操作界面" << endl;
                                 cout << "1. 浏览商品" << endl;
                                 cout << "2. 查询商品" << endl;
                                 cout << "3. 添加商品" << endl;
@@ -80,8 +83,6 @@ public:
                                     serviceAdmin->searchGoods(keyId);
                                     break;
                                 case '3':
-                                    cout << "请输入你要添加商品的相关信息：" << endl;
-                                    //等下实现
                                     serviceAdmin->addGoods();
                                     break;
                                 case '4':
@@ -113,6 +114,7 @@ public:
                         cin >> username;
                         cout << "请输入密码：" << endl;
                         cin >> password;
+                        
                         if (serviceClient->checkUser(username, password, 2)) { //这里进行登录校验                        
                             //成功后进入三级管理员菜单
                             cout << "登录成功" << endl;
@@ -186,9 +188,6 @@ public:
                     cout << "请输入密码：" << endl;
                     cin >> password;
                     serviceAdmin->enroll(username, password, 1);
-                    cout << "注册成功，即将返回首页" << endl;
-                    system("pause");
-                    system("cls");
                 }
                 else if (key == '2') {
                     cout << "请输入用户名：" << endl;
@@ -196,9 +195,6 @@ public:
                     cout << "请输入密码：" << endl;
                     cin >> password;
                     serviceClient->enroll(username, password, 2);
-                    cout << "注册成功，即将返回首页" << endl;
-                    system("pause");
-                    system("cls");
                 }
                 else {
                     cout << "你的输入有误, 注册失败！" << endl;
@@ -216,6 +212,9 @@ public:
                 break;
             }
         }
+
+        Order::updateMaxId(); //退出系统时，将下一次的订单id存入文件，以便程序再次启动时加载出来
+        Commodity::updateMaxId();
 	}
 };
 
