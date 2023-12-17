@@ -47,10 +47,10 @@ public:
     void setCreateTime(const std::chrono::system_clock::time_point& newCreateTime) { createTime = newCreateTime; }
 
     string toString() {
-        return "Order ID: " + to_string(id) + "\n" +
-            "Client Name: " + clientName + "\n" +
-            "Goods: \n" + goods.toString() + "\n" +
-            "Count: " + to_string(count) + "\n" +
+        return "Order ID: " + to_string(id) + " " +
+            "Client Name: " + clientName + " " +
+            "Goods:  " + goods.toString() + " " +
+            "Count: " + to_string(count) + " " +
             "Create Time: " + to_string(std::chrono::system_clock::to_time_t(createTime));
     }
 

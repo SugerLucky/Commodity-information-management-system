@@ -27,14 +27,6 @@ public:
 		cin >> supplierId;
 
 		Commodity commodity(Commodity::getNextId(), name, type, price, count, supplierId);
-		/*ofstream file("Goods.txt", ios::app);
-		if (file.is_open()) {
-			file << commodity.toString() << endl;
-			file.close();
-		}
-		else {
-			cout << "Failed to open file for adding goods." << endl;
-		}*/
 		FileStorage::save(commodity);
 
 		cout << "Ìí¼Ó³É¹¦£¡" << endl;

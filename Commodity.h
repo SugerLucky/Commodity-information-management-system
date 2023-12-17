@@ -81,50 +81,6 @@ public:
             "Supplier ID: " + to_string(supplierId);
     }
 
-    static Commodity fromString(const string& data) {
-        istringstream iss(data);
-        string idStr, name, typeStr, priceStr, quantityStr, supplierIdStr;
-        getline(iss, idStr, ' ');
-        getline(iss, name, ' ');
-        getline(iss, typeStr, ' ');
-        getline(iss, priceStr, ' ');
-        getline(iss, quantityStr, ' ');
-        getline(iss, supplierIdStr, ' ');
-
-        // 移除冒号
-        idStr.erase(0, 4);
-        name.erase(0, 5);
-        typeStr.erase(0, 5);
-        priceStr.erase(0, 6);
-        quantityStr.erase(0, 9);
-        supplierIdStr.erase(0, 13);
-
-        int id = stoi(idStr);
-        double price = stod(priceStr);
-        int quantity = stoi(quantityStr);
-        int supplierId = stoi(supplierIdStr);
-
-        // 将类型字符串转换回整数
-        int type;
-        if (typeStr == "食品") {
-            type = 1;
-        }
-        else if (typeStr == "衣服") {
-            type = 2;
-        }
-        else if (typeStr == "数码") {
-            type = 3;
-        }
-        else if (typeStr == "书籍") {
-            type = 4;
-        }
-        else {
-            type = 0; // 未知类型
-        }
-
-        return Commodity(id, name, type, price, quantity, supplierId);
-    }
-
 
     bool operator==(const Commodity& other) const
     {
