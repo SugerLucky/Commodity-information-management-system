@@ -1,0 +1,8 @@
+{
+    "ID": 1,
+    "Name": "apples",
+    "Price": 10.0,
+    "Quantity": 5,
+    "SupplierID": 1,
+    "Type": 1
+}

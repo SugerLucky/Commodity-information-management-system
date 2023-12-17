@@ -3,6 +3,7 @@
 #include <ctime>
 #include "Commodity.h"
 #include <fstream>
+#include <nlohmann/json.hpp>
 /*
 * ∂©µ•¿‡
 */
@@ -30,9 +31,9 @@ public:
 
     void setId(int newId) { id = newId; }
 
-    string getClientId() const { return clientName; }
+    string getClientName() const { return clientName; }
 
-    void setClientId(string newClientName) { clientName = newClientName; }
+    void setClientName(string newClientName) { clientName = newClientName; }
 
     Commodity getGoods() const { return goods; }
 
@@ -46,7 +47,7 @@ public:
 
     void setCreateTime(const std::chrono::system_clock::time_point& newCreateTime) { createTime = newCreateTime; }
 
-    string toString() {
+    string toString() const {
         return "Order ID: " + to_string(id) + " " +
             "Client Name: " + clientName + " " +
             "Goods:  " + goods.toString() + " " +
@@ -54,7 +55,40 @@ public:
             "Create Time: " + to_string(std::chrono::system_clock::to_time_t(createTime));
     }
 
-    static string getFileName() { return "orders.txt"; }
+    void serialize(nlohmann::json& j) const
+    {
+        j = {
+            {"ID", id},
+            {"ClientName", clientName},
+            {"Goods", {
+                {"ID", goods.getId()},
+                {"Name", goods.getName()},
+                {"Type", goods.getType()},
+                {"Price", goods.getPrice()},
+                {"Quantity", goods.getQuantity()},
+                {"SupplierID", goods.getSupplierId()}
+            }},
+            {"Count", count},
+            {"CreateTime", std::chrono::system_clock::to_time_t(createTime)}
+        };
+    }
+
+    void deserialize(const nlohmann::json& j)
+    {
+        id = j["ID"];
+        clientName = j["ClientName"];
+        const nlohmann::json& goodsJson = j["Goods"];
+        goods.setId(goodsJson["ID"]);
+        goods.setName(goodsJson["Name"]);
+        goods.setType(goodsJson["Type"]);
+        goods.setPrice(goodsJson["Price"]);
+        goods.setQuantity(goodsJson["Quantity"]);
+        goods.setSupplierId(goodsJson["SupplierID"]);
+        count = j["Count"];
+        createTime = std::chrono::system_clock::from_time_t(j["CreateTime"]);
+    }
+
+    static string getFileName() { return "orders.json"; }
 
 
     static string getMaxIdFileName() { return "max_order_id.txt"; }

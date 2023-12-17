@@ -1,0 +1,14 @@
+{
+    "ClientName": "root",
+    "Count": 1,
+    "CreateTime": 1702799089,
+    "Goods": {
+        "ID": 1,
+        "Name": "apples",
+        "Price": 10.0,
+        "Quantity": 5,
+        "SupplierID": 1,
+        "Type": 1
+    },
+    "ID": 1
+}

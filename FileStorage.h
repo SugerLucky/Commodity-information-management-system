@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include <nlohmann/json.hpp>
-
 using namespace std;
 
 //可以考虑使用更安全的序列化和反序列化方法，比如使用 C++ 的序列化库或者 JSON 序列化。
@@ -18,9 +17,11 @@ public:
     // 保存单个对象到文件
     template <typename T>
     static bool save(const T& obj) {
-        ofstream file(T::getFileName(), ios::out | ios::binary);
+        ofstream file(T::getFileName());
         if (file.is_open()) {
-            file.write(reinterpret_cast<const char*>(&obj), sizeof(T));
+            nlohmann::json j;
+            obj.serialize(j);
+            file << j.dump(4);
             file.close();
             return true;
         }
@@ -34,16 +35,25 @@ public:
     template <typename T>
     static vector<T> loadAll() {
         vector<T> objects;
-        ifstream file(T::getFileName(), ios::in | ios::binary);
+        ifstream file(T::getFileName());
         if (file.is_open()) {
-            while (!file.eof()) {
-                T obj;
-                file.read(reinterpret_cast<char*>(&obj), sizeof(T));
-                if (file.gcount() == sizeof(T)) {
+            nlohmann::json j;
+            file >> j;
+            file.close();
+            if (!j.is_null()) {
+                if (j.is_array()) {
+                    for (const auto& item : j) {
+                        T obj;
+                        obj.deserialize(item);
+                        objects.push_back(obj);
+                    }
+                }
+                else {
+                    T obj;
+                    obj.deserialize(j);
                     objects.push_back(obj);
                 }
             }
-            file.close();
         }
         else {
             cerr << "Error: Unable to open file for reading: " << T::getFileName() << endl;
@@ -51,4 +61,3 @@ public:
         return objects;
     }
 };
-

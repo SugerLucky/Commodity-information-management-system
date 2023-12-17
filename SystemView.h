@@ -89,9 +89,9 @@ public:
                                     serviceAdmin->browseClientOrders();
                                     break;
                                 case '5':
-                                    cout << "请输入你要查询用户的id: " << endl;
-                                    cin >> key;
-                                    serviceAdmin->searchClientOrders(key);
+                                    cout << "请输入你要查询用户的用户名: " << endl;
+                                    cin >> username;
+                                    serviceAdmin->searchClientOrders(username);
                                     break;
                                 case '6':
                                     loop = false;
@@ -116,7 +116,7 @@ public:
                         cin >> password;
                         
                         if (serviceClient->checkUser(username, password, 2)) { //这里进行登录校验                        
-                            //成功后进入三级管理员菜单
+                            //成功后进入三级的客户菜单
                             cout << "登录成功" << endl;
                             system("pause");
                             system("cls");
@@ -145,7 +145,7 @@ public:
                                     int num;
                                     cout << "请输入购买的数量" << endl;
                                     cin >> num;
-                                    serviceClient->purchase(id, num);
+                                    serviceClient->purchase(username, id, num);
                                     break;
                                 case '4':
                                     serviceClient->browseOrder();

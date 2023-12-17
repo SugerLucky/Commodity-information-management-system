@@ -11,6 +11,6 @@ public:
 
 	Administrator(const string& user, const string& pwd) : User(user, pwd) {}
 
-	static string getFileName() { return "administrators.txt"; }
+	static string getFileName() { return "administrators.json"; }
 };
 

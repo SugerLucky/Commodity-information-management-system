@@ -34,17 +34,30 @@ public:
 		system("cls");
 	}
 
-	void modifyGoods(int id) {
-		//从Goods.txt中查询到该id的商品，修改后重新添加到文件中
-	}
+
 
 	void browseClientOrders() {
-		vector<Order> orders; //将order.txt文件中所有的订单一一存到到数组中,然后一一遍历
-		
+		vector<Order> orders = FileStorage::loadAll<Order>(); // 从文件中加载所有订单
+		for (const auto& order : orders) {
+			cout << order.toString() << endl;
+		}
+		system("pause");
+		system("cls");
 	}
 
-	void searchClientOrders(int id) {
-		//从order.txt文件中查找编号为id的商品
+	void searchClientOrders(const string& name) {
+		vector<Order> orders = FileStorage::loadAll<Order>(); // 从文件中加载所有订单
+		for (const auto& order : orders) {
+			if (order.getClientName() == name) {
+				cout << order.toString() << endl;
+				system("pause");
+				system("cls");
+				return;
+			}
+		}
+		cout << "未找到" << name << "的订单" << endl;
+		system("pause");
+		system("cls");
 	}
 };
 

@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
+#include <nlohmann/json.hpp>
 /*
 * 用户的基类
 */
@@ -25,6 +26,19 @@ public:
         return username;
     }
 
+    void serialize(nlohmann::json& j) const
+    {
+        j = {
+            {"Username", username},
+            {"Password", password}
+        };
+    }
+
+    void deserialize(const nlohmann::json& j)
+    {
+        username = j["Username"];
+        password = j["Password"];
+    }
 
     void setUsername(string name) {
         username = name;
@@ -47,6 +61,6 @@ public:
         return "username: " + username + ", password: " + password;
     }
 
-    static string getFileName() { return "users.txt"; }
+    static string getFileName() { return "users.json"; }
 };
 

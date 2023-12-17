@@ -3,6 +3,8 @@
 #include <sstream>
 #include <fstream>
 using namespace std;
+
+#include <nlohmann/json.hpp>
 /*
 * …Ã∆∑¿‡
 */
@@ -82,12 +84,34 @@ public:
     }
 
 
+    void serialize(nlohmann::json& j) const
+    {
+        j = {
+            {"ID", id},
+            {"Name", name},
+            {"Type", type},
+            {"Price", price},
+            {"Quantity", quantity},
+            {"SupplierID", supplierId}
+        };
+    }
+
+    void deserialize(const nlohmann::json& j)
+    {
+        id = j["ID"];
+        name = j["Name"];
+        type = j["Type"];
+        price = j["Price"];
+        quantity = j["Quantity"];
+        supplierId = j["SupplierID"];
+    }
+        
     bool operator==(const Commodity& other) const
     {
         return id == other.id && type == other.type && price == other.price && quantity == other.quantity && supplierId == other.supplierId;
     }
 
-    static string getFileName() { return "commodities.txt"; }
+    static string getFileName() { return "commodities.json"; }
 
     static string getMaxIdFileName() { return "max_commodity_id.txt"; }
 
