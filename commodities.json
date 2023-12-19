@@ -1,8 +1,22 @@
-{
+[{
     "ID": 1,
     "Name": "apples",
     "Price": 10.0,
     "Quantity": 5,
     "SupplierID": 1,
     "Type": 1
-}
+},{
+    "ID": 2,
+    "Name": "down_jacket",
+    "Price": 99.0,
+    "Quantity": 1,
+    "SupplierID": 1,
+    "Type": 2
+},{
+    "ID": 3,
+    "Name": "The-Old-Man-and-the-Sea",
+    "Price": 20.0,
+    "Quantity": 1,
+    "SupplierID": 2,
+    "Type": 4
+}]

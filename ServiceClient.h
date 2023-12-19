@@ -7,8 +7,12 @@
 */
 class ServiceClient : public Service {
 private:
-
+	Client client;
 public:
+	ServiceClient(const string& name, const string& pwd) {
+		client.setUsername(name);
+		client.setPassword(pwd);
+	}
 
     void purchase(const string& username, int id, int num) {
         Order newOrder;
@@ -38,12 +42,27 @@ public:
     }
 
     void browseOrder() {
-        vector<Order> orders = FileStorage::loadAll<Order>();
-        for (const auto& order : orders) {
-            cout << order.toString() << endl;
-        }
-        system("pause");
-        system("cls");
-    }
+		vector<Order> orders = FileStorage::loadAll<Order>(); // 从文件中加载所有订单
+		vector<Order> clientOrders; // 该用户的订单
+		for (const auto& order : orders) {
+			if (order.getClientName() == client.getUsername()) {
+				clientOrders.push_back(order);
+			}
+
+		}
+
+		if (clientOrders.size() != 0) {
+			for (const auto& order : clientOrders) {
+				cout << order.toString() << endl;
+			}
+			system("pause");
+			system("cls");
+		}
+		else {
+			cout << "未找到" << "您的" << "的订单" << endl;
+			system("pause");
+			system("cls");
+		}
+	}
 };
 

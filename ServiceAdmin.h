@@ -47,17 +47,25 @@ public:
 
 	void searchClientOrders(const string& name) {
 		vector<Order> orders = FileStorage::loadAll<Order>(); // 从文件中加载所有订单
+		vector<Order> clientOrders; // 该用户的订单
 		for (const auto& order : orders) {
 			if (order.getClientName() == name) {
-				cout << order.toString() << endl;
-				system("pause");
-				system("cls");
-				return;
+				clientOrders.push_back(order);
 			}
 		}
-		cout << "未找到" << name << "的订单" << endl;
-		system("pause");
-		system("cls");
+
+		if (clientOrders.size() != 0) {
+			for (const auto& order : clientOrders) {
+				cout << order.toString() << endl;
+			}
+			system("pause");
+			system("cls");
+		}
+		else {
+			cout << "未找到" << name << "的订单" << endl;
+			system("pause");
+			system("cls");
+		}
 	}
 };
 

@@ -17,16 +17,25 @@ public:
     // 保存单个对象到文件
     template <typename T>
     static bool save(const T& obj) {
-        ofstream file(T::getFileName());
+        fstream file(T::getFileName(), ios::in | ios::out | ios::binary);  // 以读写方式打开文件
         if (file.is_open()) {
+            file.seekp(0, ios::end);  // 将文件指针移到末尾
+            if (file.tellg() != 0) {
+                file.seekp(-1, ios::cur); // 移动文件指针到倒数第一个字符，即"]"的位置
+                file << ",";  // 在最后一个对象后面加上逗号
+            }
+            else {
+                file << "["; // 如果文件为空，则在开头加上"["符号
+            }
             nlohmann::json j;
             obj.serialize(j);
-            file << j.dump(4);
+            file << j.dump(4);  // 将新对象的数据追加到文件末尾
+            file << "]";  // 在文件末尾加上"]"符号
             file.close();
             return true;
         }
         else {
-            cerr << "Error: Unable to open file for writing: " << T::getFileName() << endl;
+            cerr << "错误：无法打开文件进行写入：" << T::getFileName() << endl;
             return false;
         }
     }

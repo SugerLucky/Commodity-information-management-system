@@ -48,11 +48,16 @@ public:
     void setCreateTime(const std::chrono::system_clock::time_point& newCreateTime) { createTime = newCreateTime; }
 
     string toString() const {
+        std::time_t time = std::chrono::system_clock::to_time_t(createTime);
+        std::tm tm;
+        localtime_s(&tm, &time);
+        char buffer[80];
+        strftime(buffer, 80, "%c", &tm);
         return "Order ID: " + to_string(id) + " " +
             "Client Name: " + clientName + " " +
             "Goods:  " + goods.toString() + " " +
             "Count: " + to_string(count) + " " +
-            "Create Time: " + to_string(std::chrono::system_clock::to_time_t(createTime));
+            "Create Time: " + string(buffer);
     }
 
     void serialize(nlohmann::json& j) const

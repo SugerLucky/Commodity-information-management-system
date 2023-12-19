@@ -109,11 +109,12 @@ public:
                         }
                     }
                     else if (key == '2') {
-                        serviceClient = new ServiceClient; //提供客户的服务
+                        
                         cout << "请输入用户名：" << endl;
                         cin >> username;
                         cout << "请输入密码：" << endl;
                         cin >> password;
+                        serviceClient = new ServiceClient(username, password); //提供客户的服务
                         
                         if (serviceClient->checkUser(username, password, 2)) { //这里进行登录校验                        
                             //成功后进入三级的客户菜单
