@@ -22,81 +22,39 @@ private:
 
 public:
 
-	Order() = default;
+    Order();
 
-    Order(int orderId, string clientName, const Commodity& orderGoods, int orderCount, const std::chrono::system_clock::time_point& orderCreateTime)
-        : id(orderId), clientName(clientName), goods(orderGoods), count(orderCount), createTime(orderCreateTime) {}
+    Order(int orderId, string clientName, const Commodity& orderGoods, int orderCount, const std::chrono::system_clock::time_point& orderCreateTime);
 
-    int getId() const { return id; }
+    int getId() const;
 
-    void setId(int newId) { id = newId; }
+    void setId(int newId);
 
-    string getClientName() const { return clientName; }
+    string getClientName() const;
 
-    void setClientName(string newClientName) { clientName = newClientName; }
+    void setClientName(string newClientName);
 
-    Commodity getGoods() const { return goods; }
+    Commodity getGoods() const;
 
-    void setGoods(const Commodity& newGoods) { goods = newGoods; }
+    void setGoods(const Commodity& newGoods);
 
-    int getCount() const { return count; }
+    int getCount() const;
 
-    void setCount(int newCount) { count = newCount; }
+    void setCount(int newCount);
 
-    std::chrono::system_clock::time_point getCreateTime() const { return createTime; }
+    std::chrono::system_clock::time_point getCreateTime() const;
 
-    void setCreateTime(const std::chrono::system_clock::time_point& newCreateTime) { createTime = newCreateTime; }
+    void setCreateTime(const std::chrono::system_clock::time_point& newCreateTime);
 
-    string toString() const {
-        std::time_t time = std::chrono::system_clock::to_time_t(createTime);
-        std::tm tm;
-        localtime_s(&tm, &time);
-        char buffer[80];
-        strftime(buffer, 80, "%c", &tm);
-        return "Order ID: " + to_string(id) + " " +
-            "Client Name: " + clientName + " " +
-            "Goods:  " + goods.toString() + " " +
-            "Count: " + to_string(count) + " " +
-            "Create Time: " + string(buffer);
-    }
+    string toString() const;
 
-    void serialize(nlohmann::json& j) const
-    {
-        j = {
-            {"ID", id},
-            {"ClientName", clientName},
-            {"Goods", {
-                {"ID", goods.getId()},
-                {"Name", goods.getName()},
-                {"Type", goods.getType()},
-                {"Price", goods.getPrice()},
-                {"Quantity", goods.getQuantity()},
-                {"SupplierID", goods.getSupplierId()}
-            }},
-            {"Count", count},
-            {"CreateTime", std::chrono::system_clock::to_time_t(createTime)}
-        };
-    }
+    void serialize(nlohmann::json& j) const;
 
-    void deserialize(const nlohmann::json& j)
-    {
-        id = j["ID"];
-        clientName = j["ClientName"];
-        const nlohmann::json& goodsJson = j["Goods"];
-        goods.setId(goodsJson["ID"]);
-        goods.setName(goodsJson["Name"]);
-        goods.setType(goodsJson["Type"]);
-        goods.setPrice(goodsJson["Price"]);
-        goods.setQuantity(goodsJson["Quantity"]);
-        goods.setSupplierId(goodsJson["SupplierID"]);
-        count = j["Count"];
-        createTime = std::chrono::system_clock::from_time_t(j["CreateTime"]);
-    }
+    void deserialize(const nlohmann::json& j);
 
-    static string getFileName() { return "orders.json"; }
+    static string getFileName();
 
-
-    static string getMaxIdFileName() { return "max_order_id.txt"; }
+    static string getMaxIdFileName();
 
     static int getNextId();
 

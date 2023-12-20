@@ -22,107 +22,51 @@ private:
 
 public:
 
-    Commodity() = default;
+    Commodity();
 
-    Commodity(int id, const string& name, int type, double price, int quantity, int supplierId)
-        : id(id), name(name), type(type), price(price), quantity(quantity), supplierId(supplierId)
-    {
-    }
+    Commodity(int id, const string& name, int type, double price, int quantity, int supplierId);
 
+    int getId() const;
 
+    void setId(int newId);
 
-    int getId() const { return id; }
+    string getName() const;
 
-    void setId(int newId) { id = newId; }
+    void setName(const string& newName);
 
-    string getName() const { return name; }
+    int getType() const;
 
-    void setName(const string& newName) { name = newName; }
+    void setType(int newType);
 
-    int getType() const { return type; }
+    double getPrice() const;
 
-    void setType(int newType) { type = newType; }
+    void setPrice(double newPrice);
 
-    double getPrice() const { return price; }
+    int getQuantity() const;
 
-    void setPrice(double newPrice) { price = newPrice; }
+    void setQuantity(int newQuantity);
 
-    int getQuantity() const { return quantity; }
+    int getSupplierId() const;
 
-    void setQuantity(int newQuantity) { quantity = newQuantity; }
+    void setSupplierId(int newSupplierId);
 
-    int getSupplierId() const { return supplierId; }
+    string toString() const;
 
-    void setSupplierId(int newSupplierId) { supplierId = newSupplierId; }
+    void serialize(nlohmann::json& j) const;
 
-    string toString() const {
-        string typeStr;
-        switch (type) {
-        case 1:
-            typeStr = "食品";
-            break;
-        case 2:
-            typeStr = "衣服";
-            break;
-        case 3:
-            typeStr = "数码";
-            break;
-        case 4:
-            typeStr = "书籍";
-            break;
-        default:
-            typeStr = "未知类型";
-            break;
-        }
-
-        return "ID: " + to_string(id) + " " +
-            "Name: " + name + " " +
-            "Type: " + typeStr + " " +
-            "Price: " + to_string(price) + " " +
-            "Quantity: " + to_string(quantity) + " " +
-            "Supplier ID: " + to_string(supplierId);
-    }
-
-
-    void serialize(nlohmann::json& j) const
-    {
-        j = {
-            {"ID", id},
-            {"Name", name},
-            {"Type", type},
-            {"Price", price},
-            {"Quantity", quantity},
-            {"SupplierID", supplierId}
-        };
-    }
-
-    void deserialize(const nlohmann::json& j)
-    {
-        id = j["ID"];
-        name = j["Name"];
-        type = j["Type"];
-        price = j["Price"];
-        quantity = j["Quantity"];
-        supplierId = j["SupplierID"];
-    }
+    void deserialize(const nlohmann::json& j);
         
-    bool operator==(const Commodity& other) const
-    {
-        return id == other.id && type == other.type && price == other.price && quantity == other.quantity && supplierId == other.supplierId;
-    }
+    bool operator==(const Commodity& other) const;
+    
+    static string getFileName();
 
-    static string getFileName() { return "commodities.json"; }
-
-    static string getMaxIdFileName() { return "max_commodity_id.txt"; }
+    static string getMaxIdFileName();
 
     static int getNextId();
         
-
-
     static void loadMaxId();
 
-    // 更新最大ID到文件
-    static void updateMaxId();
+    static void updateMaxId(); // 更新最大ID到文件
 };
 
 

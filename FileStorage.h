@@ -8,7 +8,7 @@
 
 #include <nlohmann/json.hpp>
 using namespace std;
-
+ 
 //可以考虑使用更安全的序列化和反序列化方法，比如使用 C++ 的序列化库或者 JSON 序列化。
 
 // 每个对象对应一个文件，文件名为对象的类名

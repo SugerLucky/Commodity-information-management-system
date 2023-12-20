@@ -7,10 +7,10 @@ class Administrator : public User {
 private:
 
 public:
-	Administrator() = default;
+	Administrator();
 
-	Administrator(const string& user, const string& pwd) : User(user, pwd) {}
+	Administrator(const string& user, const string& pwd);
 
-	static string getFileName() { return "administrators.json"; }
+	static string getFileName();
 };
 

@@ -11,56 +11,29 @@ private:
     string username;
     string password;
 
-
 public:
-    User() = default;
+    User();
 
-    User(const string& username, const string& password)
-        : username(username), password(password)
-    {
-    }
+    User(const string& username, const string& password);
 
-    virtual ~User() {}
+    virtual ~User();
 
-    string getUsername() const {
-        return username;
-    }
+    string getUsername() const;
 
-    void serialize(nlohmann::json& j) const
-    {
-        j = {
-            {"Username", username},
-            {"Password", password}
-        };
-    }
+    void serialize(nlohmann::json& j) const;
 
-    void deserialize(const nlohmann::json& j)
-    {
-        username = j["Username"];
-        password = j["Password"];
-    }
+    void deserialize(const nlohmann::json& j);
 
-    void setUsername(string name) {
-        username = name;
-    }
+    void setUsername(string name);
 
-    string getPassword() const {
-        return password;
-    }
+    string getPassword() const;
 
-    void setPassword(string psw) {
-        password = psw;
-    }
+    void setPassword(string psw);
 
-    bool operator==(const User& other) const
-    {
-        return username == other.username && password == other.password;
-    }
+    bool operator==(const User& other) const;
 
-    string toString() const {
-        return "username: " + username + ", password: " + password;
-    }
+    string toString() const;
 
-    static string getFileName() { return "users.json"; }
+    static string getFileName();
 };
 

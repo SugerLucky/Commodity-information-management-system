@@ -9,14 +9,13 @@
 class Client : public User {
 private:
 
-
 public:
 
-	Client() = default;
+	Client();
 
-	Client(const string& user, const string& pwd) : User(user, pwd) {}
+	Client(const string& user, const string& pwd);
 
-	static string getFileName() { return "clients.json"; }
+	static string getFileName();
 
 };
 

@@ -11,35 +11,20 @@ private:
     string phone;
 
 public:
-    Supplier() = default;
+    Supplier();
 
-    Supplier(int id, const string& name, const string& phone)
-        : id(id), name(name), phone(phone)
-    {
-    }
+    Supplier(int id, const string& name, const string& phone);
+        
+    int getId() const;
 
-    int getId() const {
-        return id;
-    }
+    void set(int id);
 
-    void set(int id) {
-        this->id = id;
-    }
+    string getName() const;
 
-    string getName() const {
-        return name;
-    }
+    void setName(string name);
 
-    void setName(string name) {
-        this->name = name;
-    }
+    string getPhone() const;
 
-    string getPhone() const {
-        return phone;
-    }
-
-    void setPhone(string phone) {
-        this->phone = phone;
-    }
+    void setPhone(string phone);
 };
 
